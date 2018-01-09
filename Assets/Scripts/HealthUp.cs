@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstentKill : MonoBehaviour
-{
+public class HealthUp : MonoBehaviour {
+
     public float rotationSpeed;
 
-    public int scoreAdded;
+    public int AddHealth;
 
     private void Update()
     {
@@ -19,8 +19,12 @@ public class InstentKill : MonoBehaviour
             var playerController = other.GetComponent<Controller>();
             if (playerController != null)
             {
-                playerController.score += scoreAdded;
-                playerController.Health -= 10;
+                playerController.Health += AddHealth;
+                Destroy(gameObject);
+            }
+            if (playerController.Health >= 30)
+            {
+                playerController.Health = 30;
                 Destroy(gameObject);
             }
             if (playerController.Health <= 0)

@@ -22,6 +22,10 @@ public class PickUp : MonoBehaviour
                 playerController.score += scoreAdded;
                 Destroy(gameObject);
             }
+            if (playerController.Health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
