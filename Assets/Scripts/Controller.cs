@@ -7,33 +7,40 @@ public class Controller : MonoBehaviour
 {
     public Rigidbody rb;
     public float speed;
-    private bool grounded = true;
+    private bool grounded ;
     public int score;
     public Slider healthBar;
     Vector3 startPos;
     GameObject bad;
     public int Health = 30;
     public float respawnTime;
+    public Text text;
+
     void Start()
     {
        // respawnTimer = respawnTime;
         startPos = transform.position;
         score = 0;
+       text.text = "Score: " + score.ToString();
         rb = GetComponent<Rigidbody>();
     }
 
+
     void OnCollisionEnter(Collision collision)
     {
-       if(collision.gameObject.tag == "Ground")
+        Debug.Log("True " + transform.position.y);
+        if (collision.gameObject.transform.position.y <= 0)
         {
             grounded = true;
         }
     }
+
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.transform.position.y <= 0)
         {
             grounded = false;
+            Debug.Log("False " + transform.position.y);
         }
     }
 
@@ -49,7 +56,7 @@ public class Controller : MonoBehaviour
         Vector3 move = new Vector3(horizontal, 0, vertical);
         Vector3 desiredVelocity = move * speed * Time.deltaTime;
         rb.velocity = new Vector3(desiredVelocity.x, rb.velocity.y, desiredVelocity.z);
-        if (grounded == false)
+        if (grounded == false && transform.position.y < 0) 
         {
             transform.position = startPos;
             score -= 5;

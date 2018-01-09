@@ -5,21 +5,29 @@ using UnityEngine;
 public class Gate : MonoBehaviour
 {
 
+    public GameObject gate;
+
+    public int needed;
     // Use this for initialization
     void Start()
     {
 
     }
 
-    void Update()
+    private void OnTriggerEnter(Collider collision)
     {
-        if (gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
-            var playerController = gameObject.GetComponent<Controller>();
-            if (playerController.score == 2)
+            var playerController = collision.gameObject.GetComponent<Controller>();
+            if (playerController.score >= needed)
             {
-                gameObject.SetActive(false);
+                gate.gameObject.SetActive(false);
             }
         }
+    }
+
+    void Update()
+    {
+       
     }
 }

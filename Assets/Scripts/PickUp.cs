@@ -1,12 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour
 {
     public float rotationSpeed;
 
     public int scoreAdded;
+
+
+   
+
+    void Awake()
+    {
+
+      
+    }
 
     private void Update()
     {
@@ -20,12 +30,14 @@ public class PickUp : MonoBehaviour
             if (playerController != null)
             {
                 playerController.score += scoreAdded;
+                playerController.text.text ="Score: " + playerController.score;
                 Destroy(gameObject);
             }
             if (playerController.Health <= 0)
             {
                 Destroy(gameObject);
             }
+            
         }
     }
 }
