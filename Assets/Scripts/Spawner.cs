@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour
         GameObject spawnpickup = Instantiate(pickUp);
         float ranX = Random.Range(-rang, rang);
         float ranz = Random.Range(-rang, rang);
-        float ranZ;
         spawnpickup.transform.position = transform.position + new Vector3(ranX, 0, ranz);
     }
 
