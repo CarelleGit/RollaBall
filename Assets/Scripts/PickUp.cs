@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class PickUp : MonoBehaviour
 {
     public float rotationSpeed;
-
     public int scoreAdded;
+    public int Negitive;
 
 
-   
+
 
     void Awake()
     {
-
-      
+        Negitive += scoreAdded;
     }
 
     private void Update()
@@ -29,10 +28,18 @@ public class PickUp : MonoBehaviour
             var playerController = other.GetComponent<Controller>();
             if (playerController != null)
             {
-                playerController.score += scoreAdded;
+                if (playerController.score >= 0)
+                {
+                    playerController.score += scoreAdded;
+                }
+                else if (playerController.score <= -1)
+                {
+                    playerController.score += Negitive;
+                }
                 playerController.text.text ="Score: " + playerController.score;
                 Destroy(gameObject);
             }
+            
             if (playerController.Health <= 0)
             {
                 Destroy(gameObject);

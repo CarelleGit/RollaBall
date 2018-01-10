@@ -66,6 +66,7 @@ public class Controller : MonoBehaviour
         {
             transform.position = startPos;
             score -= 10;
+            text.text = "Score: " + score;
             Health = 30;
         }
     }

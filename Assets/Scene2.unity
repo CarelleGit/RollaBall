@@ -8476,7 +8476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gate: {fileID: 740919550}
-  needed: 0
+  needed: 30
 --- !u!65 &2011014466
 BoxCollider:
   m_ObjectHideFlags: 0

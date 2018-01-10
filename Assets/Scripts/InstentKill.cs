@@ -20,6 +20,7 @@ public class InstentKill : MonoBehaviour
             if (playerController != null)
             {
                 playerController.score += scoreAdded;
+                playerController.text.text = "Score: " + playerController.score;
                 playerController.Health -= 10;
                 Destroy(gameObject);
             }

@@ -22,6 +22,8 @@ public class Gate : MonoBehaviour
             if (playerController.score >= needed)
             {
                 gate.gameObject.SetActive(false);
+                playerController.score -= needed;
+                playerController.text.text = "Score: " + playerController.score;
             }
         }
     }
