@@ -3,6 +3,7 @@
 // サンプル
 // 2014/03/13 N.Kobyasahi
 //
+using UnityEngine.UI;
 using UnityEngine;
 using System.Collections;
 
@@ -13,8 +14,15 @@ using System.Collections;
 
 public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 {
+    public Rigidbody rb;
+    private bool grounded;
+    public int score;
+    public Slider healthBar;
+    Vector3 startPos;
+    public int Health = 30;
+    public Text text;
 
-	public float animSpeed = 1.5f;				// アニメーション再生速度設定
+    public float animSpeed = 1.5f;				// アニメーション再生速度設定
 	public float lookSmoother = 3.0f;			// a smoothing setting for camera motion
 	public bool useCurves = true;				// Mecanimでカーブ調整を使うか設定する
 												// このスイッチが入っていないとカーブは使われない
@@ -31,7 +39,6 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 	public float jumpPower = 3.0f; 
 	// キャラクターコントローラ（カプセルコライダ）の参照
 	private CapsuleCollider col;
-	private Rigidbody rb;
 	// キャラクターコントローラ（カプセルコライダ）の移動量
 	private Vector3 velocity;
 	// CapsuleColliderで設定されているコライダのHeiht、Centerの初期値を収める変数
@@ -52,8 +59,12 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 // 初期化
 	void Start ()
 	{
-		// Animatorコンポーネントを取得する
-		anim = GetComponent<Animator>();
+        startPos = transform.position;
+        score = 0;
+        text.text = "Score: " + score.ToString();
+        rb = GetComponent<Rigidbody>();
+        // Animatorコンポーネントを取得する
+        anim = GetComponent<Animator>();
 		// CapsuleColliderコンポーネントを取得する（カプセル型コリジョン）
 		col = GetComponent<CapsuleCollider>();
 		rb = GetComponent<Rigidbody>();
@@ -63,10 +74,41 @@ public class UnityChanControlScriptWithRgidBody : MonoBehaviour
 		orgColHight = col.height;
 		orgVectColCenter = col.center;
 }
-	
-	
-// 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
-	void FixedUpdate ()
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("True " + transform.position.y);
+        if (collision.gameObject.transform.position.y <= 0)
+        {
+            grounded = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.transform.position.y <= 0)
+        {
+            grounded = false;
+            Debug.Log("False " + transform.position.y);
+        }
+    }
+    private void Update()
+    {
+        healthBar.value = Health;
+        if (grounded == false && transform.position.y < 0)
+        {
+            transform.position = startPos;
+            score -= 5;
+            Health -= 2;
+        }
+        if (Health <= 0)
+        {
+            transform.position = startPos;
+            score -= 10;
+            text.text = "Score: " + score;
+            Health = 30;
+        }
+    }
+    // 以下、メイン処理.リジッドボディと絡めるので、FixedUpdate内で処理を行う.
+    void FixedUpdate ()
 	{
 		float h = Input.GetAxis("Horizontal");				// 入力デバイスの水平軸をhで定義
 		float v = Input.GetAxis("Vertical");				// 入力デバイスの垂直軸をvで定義

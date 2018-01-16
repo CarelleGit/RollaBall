@@ -85,7 +85,11 @@ public class ThirdPersonCamera : MonoBehaviour
 	{
 		// Change Jump Camera
 		bQuickSwitch = false;
-				transform.position = Vector3.Lerp(transform.position, jumpPos.position, Time.fixedDeltaTime * smooth);	
-				transform.forward = Vector3.Lerp(transform.forward, jumpPos.forward, Time.fixedDeltaTime * smooth);		
+        if(jumpPos != null)
+        {
+            transform.position = Vector3.Lerp(transform.position, jumpPos.position, Time.fixedDeltaTime * smooth);
+            transform.forward = Vector3.Lerp(transform.forward, jumpPos.forward, Time.fixedDeltaTime * smooth);
+        }
+						
 	}
 }
